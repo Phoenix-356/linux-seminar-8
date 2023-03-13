@@ -1,0 +1,17 @@
+#! /bin/bash
+
+directory=$1
+files=$(ls $directory)
+
+for file in ${files}
+     do
+        owner=$(stat -c %U ${directory}/${file})
+
+        if ! [ -d ${owner} ]
+        then
+            sudo -u ${owner} mkdir /home/phoenx/hw2/${owner}/
+            sudo -u ${owner} cp ${directory}/${file} /home/phoenx/hw2/${owner}
+        else
+            sudo -u ${owner} cp ${directory}/${file} /home/phoenx/hw2/${owner}
+        fi
+    done
